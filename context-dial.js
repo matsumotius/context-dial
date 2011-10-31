@@ -49,6 +49,7 @@ $(function(){
         this.rail = $(this.target).en({ 
             x : this.x, y : this.y, radius : this.radius * 0.6, color : this.options.color, type : 'fill'
         });
+        this.count = 0;
         this.list = {};
         this.queue = [];
         this.events = {};
@@ -60,6 +61,9 @@ $(function(){
         var mouseup = this.dial.is_smartphone ? 'touchend' : 'mouseup';
         // todo: move to other block
         this.dial.on(mousemove, function(e){
+            that.count++;
+            if(that.count % 3 != 0) return;
+            that.coutn = 1;
             for(var key in that.list){
                 var context = that.list[key];
                 if(false === context.is_drugging) continue;
