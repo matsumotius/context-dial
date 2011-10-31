@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>context-wheel / example</title>
+    <script type="text/javascript" src="../lib/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="../lib/en.js"></script>
+    <script type="text/javascript" src="../context-dial.js"></script>
+    <script type='text/javascript'>
+    <!--
+        $(function(){
+            $('body').append('<canvas id="canvas" width="320" height="320" />');
+            $('body').append('<p>status: <span id="status" /></p>');
+            $('body').append('<p>A: <span id="a" /></p>');
+            $('body').append('<p>B: <span id="b" /></p>');
+            $('body').append('<p>C: <span id="c" /></p>');
+            var context_dial = $('#canvas').context_dial({ x : 160, y : 160, color : '#8b0000', radius : 160, type : 'fill' });
+            var en_options = { x : 0, y : 0, radius : 36, type : 'fill' };
+            context_dial.add('a', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#808000' }) });
+            context_dial.add('b', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#bdb76b' }) });
+            context_dial.add('c', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#ffd700' }) });
+            context_dial.on('touchstart', function(context){
+                $('#status').text('key:' + context.key + ' touch start');
+            });
+            context_dial.on('touchmove', function(context){
+                $('#status').text('key:' + context.key + ' touch move');
+            });
+            context_dial.on('touchend', function(context){
+                $('#status').text('key:' + context.key + ' touch end');
+            });
+            context_dial.on('change', function(context){
+                $('#'+context.key).text(context.value);
+            });
+        });
+    //-->
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
