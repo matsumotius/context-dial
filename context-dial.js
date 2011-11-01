@@ -63,7 +63,7 @@ $(function(){
         this.dial.on(mousemove, function(e){
             that.count++;
             if(that.count % 3 != 0) return;
-            that.coutn = 0;
+            that.count = 0;
             for(var key in that.list){
                 var context = that.list[key];
                 if(false === context.is_drugging) continue;
