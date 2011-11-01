@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>context-wheel / example</title>
+    <script type="text/javascript" src="../lib/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="../lib/en.js"></script>
+    <script type="text/javascript" src="../context-dial.js"></script>
+    <script type='text/javascript'>
+    <!--
+        $(function(){
+            $('body').append('<canvas id="canvas" width="640" height="640" />');
+            $('body').append('<p>status: <span id="status" /></p>');
+            var context_dial = $('#canvas').context_dial({ x : 320, y : 320, color : '#8b0000', radius : 320, type : 'fill' });
+            var en_options = { x : 0, y : 0, radius : 80, type : 'fill' };
+            context_dial.add('a', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#808000' }) });
+            context_dial.add('b', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#bdb76b' }) });
+            context_dial.add('c', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#ffd700' }) });
+            context_dial.on('touchmove', function(context){
+                $('#status').text('key:' + context.key + ' touch move');
+            });
+            $('body').append('<p><button id="remove">remove</button></p>');
+            $('#remove').click(function(e){
+                context_dial.remove('c');
+            });
+        });
+    //-->
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

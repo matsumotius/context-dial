@@ -63,7 +63,7 @@ $(function(){
         this.dial.on(mousemove, function(e){
             that.count++;
             if(that.count % 3 != 0) return;
-            that.coutn = 1;
+            that.coutn = 0;
             for(var key in that.list){
                 var context = that.list[key];
                 if(false === context.is_drugging) continue;
@@ -81,6 +81,7 @@ $(function(){
                 that.relocate_context(key);
                 that.fire('touchmove', context);
                 that.fire('change', context);
+                return;
             }
         });
         this.dial.on(mouseup, function(e){
@@ -107,8 +108,8 @@ $(function(){
             if(angle > 180) angle = -360 + angle;
             context.en.x = this.rail.x + this.rail.radius * Math.cos(radian_from(angle));
             context.en.y = this.rail.y - this.rail.radius * Math.sin(radian_from(angle));
-            context.en.move(context.en.x, context.en.y);
         }
+        context.en.move(context.en.x, context.en.y);
     };
     ContextDial.prototype.set_value = function(key, value){
         if(key in this.list) return;
@@ -128,15 +129,14 @@ $(function(){
         if(false == (ev in this.events) || this.events[ev].length < 1) return;
         $.each(this.events[ev], function(index, callback){ callback(context); });
     };
-    /*
     ContextDial.prototype.remove = function(key){
         if(false == (key in this.list)) return;
         this.list[key].en.remove();
-        this.list[key] = null;
+        delete this.list[key];
         var queue_index = this.queue.indexOf(key);
         this.queue = this.queue.slice(0, queue_index).concat(this.queue.slice(queue_index + 1));
+        this.relocate_context();
     };
-    */
     $.fn.context_dial = function(options){
         var context_dial = new ContextDial(this, options)
         context_dial.set_event();
