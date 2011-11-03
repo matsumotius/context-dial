@@ -13,6 +13,7 @@ $(function(){
         this.__defineGetter__('is_max', function(){ return this.value >= this.max; });
         this.__defineGetter__('is_min', function(){ return this.value <= this.min; });
         this.radius = _options.radius;
+        this.image = null;
         var en_options = $.extend(default_options.context, _options.en);
         this.en = $(this.__parent.target).en(en_options);
         this.en.on_rail(this.__parent.rail);
@@ -136,6 +137,10 @@ $(function(){
         var queue_index = this.queue.indexOf(key);
         this.queue = this.queue.slice(0, queue_index).concat(this.queue.slice(queue_index + 1));
         this.relocate_context();
+    };
+    ContextDial.prototype.set_image = function(key, image){
+        this.list[key].image = image;
+        this.list[key].en.set_image(image.url, image.width, image.height);
     };
     $.fn.context_dial = function(options){
         var context_dial = new ContextDial(this, options)

@@ -14,11 +14,14 @@
             $('body').append('<p>A: <span id="a" /></p>');
             $('body').append('<p>B: <span id="b" /></p>');
             $('body').append('<p>C: <span id="c" /></p>');
-            var context_dial = $('#canvas').context_dial({ x : 320, y : 320, color : '#8b0000', radius : 320, type : 'fill' });
+            var context_dial = $('#canvas').context_dial({ x : 320, y : 320, color : '#556b2f', radius : 320, type : 'fill' });
             var en_options = { x : 0, y : 0, radius : 80, type : 'fill' };
-            context_dial.add('a', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#808000' }) });
+            context_dial.add('a', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#bdb76b' }) });
             context_dial.add('b', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#bdb76b' }) });
-            context_dial.add('c', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#ffd700' }) });
+            context_dial.add('c', { max : 100, min : 0, value_by_rot : 25, en : $.extend(en_options, { color : '#bdb76b' }) });
+            context_dial.set_image('a', { url : './image/videos.png', width : 80, height : 80 });
+            context_dial.set_image('b', { url : './image/sound.png', width : 80, height : 80 });
+            context_dial.set_image('c', { url : './image/contact.png', width : 80, height : 80 });
             context_dial.on('touchstart', function(context){
                 $('#status').text('key:' + context.key + ' touch start');
             });
