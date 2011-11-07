@@ -142,6 +142,9 @@ $(function(){
         this.list[key].image = image;
         this.list[key].en.set_image(image.url, image.width, image.height);
     };
+    ContextDial.prototype.set_value = function(key, value){
+        this.list[key].value = value;
+    };
     $.fn.context_dial = function(options){
         var context_dial = new ContextDial(this, options)
         context_dial.set_event();
