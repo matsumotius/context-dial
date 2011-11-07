@@ -22,6 +22,7 @@
             context_dial.set_image('a', { url : './image/videos.png', width : 80, height : 80 });
             context_dial.set_image('b', { url : './image/sound.png', width : 80, height : 80 });
             context_dial.set_image('c', { url : './image/contact.png', width : 80, height : 80 });
+            context_dial.set_center('center', { en : en_options });
             context_dial.on('touchstart', function(context){
                 $('#status').text('key:' + context.key + ' touch start');
             });

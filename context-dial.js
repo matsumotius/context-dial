@@ -1,23 +1,27 @@
 $(function(){
     var default_options = {
-        context : { x : 0, y : 0, radius : 30, color : 'gray', type : 'stroke' },
+        context : { max : 100, min : 0, value_by_rot : 50, value : 0, is_center : false },
+        context_en : { x : 0, y : 0, radius : 30, color : 'gray', type : 'stroke' },
         context_wheel : { x : 160, y :160, radius : 160, color : 'gray', type : 'stroke' }
     };
     var Context = function(_parent, _key, _options){
         this.__parent = _parent;
         this.key = _key;
-        this.value = _options.value || 0;
-        this.value_by_rot = _options.value_by_rot;
-        this.max = _options.max;
-        this.min = _options.min;
+        this.options = $.extend(default_options.context, _options);
+        this.value = this.options.value;
+        this.value_by_rot = this.options.value_by_rot;
+        this.max = this.options.max;
+        this.min = this.options.min;
         this.__defineGetter__('is_max', function(){ return this.value >= this.max; });
         this.__defineGetter__('is_min', function(){ return this.value <= this.min; });
-        this.radius = _options.radius;
+        this.radius = this.options.radius;
         this.image = null;
-        var en_options = $.extend(default_options.context, _options.en);
-        this.en = $(this.__parent.target).en(en_options);
-        this.en.on_rail(this.__parent.rail);
+        this.is_center = this.options.is_center;
         this.is_drugging = false;
+        // en 
+        var en_options = $.extend(default_options.context_en, this.options.en);
+        this.en = $(this.__parent.target).en(en_options);
+        if(false === this.is_center) this.en.on_rail(this.__parent.rail);
     };
     Context.prototype.set_event = function(){
         var that = this;
@@ -52,6 +56,7 @@ $(function(){
         });
         this.count = 0;
         this.list = {};
+        this.center = null;
         this.queue = [];
         this.events = {};
         for(var i=0;i<CD_EVENTS.length;i++) this.events[CD_EVENTS[i]] = [];
@@ -122,6 +127,13 @@ $(function(){
         this.list[key] = context;
         this.queue.push(key);
         this.relocate_context();
+    };
+    ContextDial.prototype.set_center = function(key, options){
+        if(this.center) this.center.en.remove();
+        var that = this;
+        var mousedown = this.dial.is_smartphone ? 'touchstart' : 'mousedown';
+        this.center = new Context(this, key, $.extend(options, { is_center : true, en : { x : this.dial.x, y : this.dial.y } }));
+        this.center.en.on(mousedown, function(e){ that.fire('touchstart', that.center); });
     };
     ContextDial.prototype.on = function(ev, callback){
         if(ev in this.events) this.events[ev].push(callback);
