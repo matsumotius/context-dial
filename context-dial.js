@@ -1,7 +1,7 @@
 $(function(){
     var default_options = {
         context : { max : 100, min : 0, value_by_rot : 50, value : 0, is_center : false },
-        context_en : { x : 0, y : 0, radius : 30, color : 'gray', type : 'stroke' },
+        context_en : { x : 0, y : 0, radius : 30, color : 'gray', type : 'stroke', layer : 2 },
         context_wheel : { x : 160, y :160, radius : 160, color : 'gray', type : 'stroke' }
     };
     var Context = function(_parent, _key, _options){
@@ -63,13 +63,11 @@ $(function(){
     };
     ContextDial.prototype.set_event = function(){
         var that = this;
-        var mousemove = this.dial.is_smartphone ? 'touchmove' : 'mousemove';
-        var mouseup = this.dial.is_smartphone ? 'touchend' : 'mouseup';
+        var mousedown = this.dial.is_smartphone ? 'touchstart' : 'mousedown';
+        var mousemove = this.dial.is_smartphone ? 'touchmove'  : 'mousemove';
+        var mouseup =   this.dial.is_smartphone ? 'touchend'   : 'mouseup';
         // todo: move to other block
         this.dial.on(mousemove, function(e){
-            that.count++;
-            if(that.count % 3 != 0) return;
-            that.count = 0;
             for(var key in that.list){
                 var context = that.list[key];
                 if(false === context.is_drugging) continue;
@@ -92,6 +90,10 @@ $(function(){
         });
         this.dial.on(mouseup, function(e){
             for(var context in that.list) that.list[context].is_drugging = false;
+            that.fire('touchend', { key : 'root' });
+        });
+        this.dial.on(mousedown, function(e){
+            that.fire('touchstart', { key : 'root' });
         });
     };
     var radian_from = function(angle){
